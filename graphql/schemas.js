@@ -11,6 +11,8 @@ var GraphQLDate = require('graphql-date');
 var CustomerModel = require('../model/customer');
 var ProfileModel = require('../model/profile');
 
+
+
 var userType = new GraphQLObjectType({
     name:"user",
     fields:()=>{
@@ -35,7 +37,27 @@ var customerType =  new GraphQLObjectType({
             phone:{
                 type:GraphQLString
             },
-            
+            MobilePhone:{
+                type:GraphQLString, 
+            },
+            email:{
+                type:GraphQLString,
+            },
+            url:{
+                type:GraphQLString,
+            },
+            industry:{
+                type:GraphQLString,
+            },
+            level:{
+                type:GraphQLString,
+            },
+            nextTime:{
+                type:GraphQLDate,
+            },
+            principal:{
+                type:profileType,
+            }
         }
     }
 })
@@ -53,9 +75,15 @@ var profileType = new GraphQLObjectType({
             phone:{
                 type:GraphQLString
             },
+          
             userId:{
                 type:userType,
+            },
+
+            leader:{
+                type:profileType,
             }
+
 
         }
     }
@@ -69,6 +97,7 @@ var queryType = new GraphQLObjectType({
                 type: new GraphQLList(customerType),
                 resolve:async ()=>{
                     const customers = await CustomerModel.find()
+                        .populate('principal')
                     if(!customers){
                         throw new Error('error')
                     }
@@ -96,6 +125,8 @@ var queryType = new GraphQLObjectType({
                 resolve:async ()=>{
                     const profiles = await ProfileModel.find()
                         .populate('userId')
+                        .populate('leader')
+
                     console.log(profiles)
                     if(!profiles){
                         throw new Error('error')

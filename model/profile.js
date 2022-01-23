@@ -16,6 +16,11 @@ const ProfileSchema = new Schema(
             type:mongoose.Schema.ObjectId,
             ref:'User',
             required:true,
+        },
+        leader:{//上级领导
+            type:mongoose.Schema.ObjectId,
+            ref:'Profile',
+            required:true,
         }
     },
 )
