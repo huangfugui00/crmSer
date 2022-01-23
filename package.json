@@ -7,6 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "admin-bro": "^2.9.0",
+    "admin-bro-expressjs": "^2.1.1",
+    "admin-bro-mongoose": "^0.5.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "connect-multiparty": "^2.2.0",
@@ -16,6 +19,7 @@
     "express-formidable": "^1.2.0",
     "express-session": "^1.17.2",
     "jsonwebtoken": "^8.5.1",
+    "module-alias": "^2.2.2",
     "mongodb": "^4.1.1",
     "mongoose": "^6.0.12",
     "morgan": "^1.10.0",
@@ -26,5 +30,11 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "_moduleAliases": {
+    "@"      : "."
+  },
+  "_moduleDirectories": ["node_modules_custom"]
+  
+
 }
