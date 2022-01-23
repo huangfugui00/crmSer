@@ -8,7 +8,7 @@ module.exports = {
       avatar:`${static}/avatar`,
     },
     SQL : {
-      url: "mongodb://localhost:27017/ecom"
+      url: "mongodb://localhost:27017/crm"
     },
     JWT : {
       secret:"mxhdxdsn12mxs9",

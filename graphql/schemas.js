@@ -9,6 +9,18 @@ var GraphQLString = require('graphql').GraphQLString;
 var GraphQLInt = require('graphql').GraphQLInt;
 var GraphQLDate = require('graphql-date');
 var CustomerModel = require('../model/customer');
+var ProfileModel = require('../model/profile');
+
+var userType = new GraphQLObjectType({
+    name:"user",
+    fields:()=>{
+        return{
+            email:{
+                type:GraphQLString
+            }
+        }
+    }
+})
 
 var customerType =  new GraphQLObjectType({
     name:'customer',
@@ -22,7 +34,29 @@ var customerType =  new GraphQLObjectType({
             },
             phone:{
                 type:GraphQLString
+            },
+            
+        }
+    }
+})
+
+var profileType = new GraphQLObjectType({
+    name:'profile',
+    fields:()=>{
+        return{
+            _id:{
+                type:GraphQLString
+            },
+            username:{
+                type:GraphQLString
+            },
+            phone:{
+                type:GraphQLString
+            },
+            userId:{
+                type:userType,
             }
+
         }
     }
 })
@@ -55,6 +89,35 @@ var queryType = new GraphQLObjectType({
                         throw new Error('error')
                     }
                     return customer
+                }
+            },
+            profiles:{
+                type: new GraphQLList(profileType),
+                resolve:async ()=>{
+                    const profiles = await ProfileModel.find()
+                        .populate('userId')
+                    console.log(profiles)
+                    if(!profiles){
+                        throw new Error('error')
+                    }
+                    return profiles
+                }
+            },
+            profile:{
+                type:profileType,
+                args:{
+                    id:{
+                        name:'_id',
+                        type:GraphQLString,
+                    }
+                },
+                resolve:async (root, params)=>{
+                    const profile = await ProfileModel.findById(params.id)
+                    .populate('userId')
+                    if(!profile){
+                        throw new Error('error')
+                    }
+                    return profile
                 }
             }
         }
