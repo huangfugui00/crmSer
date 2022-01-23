@@ -15,6 +15,9 @@
     "connect-multiparty": "^2.2.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
+    "express-graphql": "^0.8.0",
+    "graphql": "^14.2.1",
+    "graphql-date": "^1.0.3",
     "express": "^4.17.1",
     "express-formidable": "^1.2.0",
     "express-session": "^1.17.2",
@@ -32,9 +35,9 @@
   "author": "",
   "license": "ISC",
   "_moduleAliases": {
-    "@"      : "."
+    "@": "."
   },
-  "_moduleDirectories": ["node_modules_custom"]
-  
-
+  "_moduleDirectories": [
+    "node_modules_custom"
+  ]
 }
