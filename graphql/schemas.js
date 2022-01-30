@@ -37,7 +37,10 @@ var customerType =  new GraphQLObjectType({
             phone:{
                 type:GraphQLString
             },
-            MobilePhone:{
+            come:{
+                type:GraphQLString
+            },
+            mobilePhone:{
                 type:GraphQLString, 
             },
             email:{
@@ -98,6 +101,7 @@ var queryType = new GraphQLObjectType({
                 resolve:async ()=>{
                     const customers = await CustomerModel.find()
                         .populate('principal')
+                    console.log(customers)
                     if(!customers){
                         throw new Error('error')
                     }

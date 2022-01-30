@@ -17,7 +17,7 @@ const CustomerSchema = new Schema(
             type:mongoose.Schema.ObjectId,
             ref:'Profile',
         },
-        MobilePhone:{
+        mobilePhone:{
             type:String,
             required:false
         },
@@ -43,7 +43,12 @@ const CustomerSchema = new Schema(
         },
         nextTime:{
             type:Date,
-        }
+        },
+        come:{
+            type:String,
+            enum:['线上' , '邮件' ,'介绍','促销','预约', '广告']
+        },
+
         
     }
 )
