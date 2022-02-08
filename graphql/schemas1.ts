@@ -12,13 +12,18 @@ const ProfileModel = require('../model/profile');
 
 
 
+type userType = {
+    email:String
+}
+
+
 const userType = new GraphQLObjectType({
     name:"user",
     fields:()=>{
         return{
             email:{
                 type:GraphQLString
-            },
+            }
         }
     }
 })
@@ -28,7 +33,7 @@ const customerType =  new GraphQLObjectType({
     fields:()=>{
         return{
             _id:{
-                type:GraphQLID
+                type:GraphQLString
             },
             name:{
                 type:GraphQLString
@@ -69,7 +74,7 @@ const profileType = new GraphQLObjectType({
     fields:()=>{
         return{
             _id:{
-                type:GraphQLID
+                type:GraphQLString
             },
             username:{
                 type:GraphQLString
@@ -111,7 +116,7 @@ const queryType = new GraphQLObjectType({
                 args:{
                     id:{
                         name:'_id',
-                        type:GraphQLID,
+                        type:GraphQLString,
                     }
                 },
                 resolve:async (root, params)=>{
@@ -140,7 +145,7 @@ const queryType = new GraphQLObjectType({
                 args:{
                     id:{
                         name:'_id',
-                        type:GraphQLID,
+                        type:GraphQLString,
                     }
                 },
                 resolve:async (root, params)=>{
@@ -191,8 +196,8 @@ const mutationType = new GraphQLObjectType({
                         type:GraphQLDate,
                     },
                     principal:{
-                        type:GraphQLID,
-                    },
+                        type:profileType,
+                    }
                 },
                 resolve:async (root, params)=>{
                     const customer = await CustomerModel.create(params)
@@ -207,7 +212,7 @@ const mutationType = new GraphQLObjectType({
                 type:customerType,
                 args:{
                     id:{
-                        type: new GraphQLNonNull(GraphQLID)
+                        type: new GraphQLNonNull(GraphQLString)
                     }
                 },
                 resolve(root, params) {
@@ -222,42 +227,19 @@ const mutationType = new GraphQLObjectType({
                 type:customerType,
                 args:{
                     id:{
-                        type:new GraphQLNonNull(GraphQLID),
-                        require:true,
+                        type:GraphQLString
+                        // type:new GraphQLNonNull(GraphQLString)
                     },
                     name:{
-                        type:GraphQLString
+                        type:GraphQLString,
                     },
                     phone:{
-                        type:GraphQLString
-                    },
-                    come:{
-                        type:GraphQLString
-                    },
-                    mobilePhone:{
-                        type:GraphQLString, 
-                    },
-                    email:{
                         type:GraphQLString,
                     },
-                    url:{
-                        type:GraphQLString,
-                    },
-                    industry:{
-                        type:GraphQLString,
-                    },
-                    level:{
-                        type:GraphQLString,
-                    },
-                    nextTime:{
-                        type:GraphQLDate,
-                    },
-                    principal:{
-                        type:GraphQLID,
-                    },
-                    
                 },
                 resolve(root,params){
+                    // const body = {name:params.name,phone:params.phone}
+                    console.log(params)
                     const remCustomer = CustomerModel.findByIdAndUpdate(params.id,params).exec();
                     if (!remCustomer) {
                       throw new Error('Error')

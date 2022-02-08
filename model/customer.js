@@ -7,7 +7,8 @@ const CustomerSchema = new Schema(
     {
         name:{
             type: String,
-            required:true
+            required:true,
+            unique:true
         },
         phone:{
             type:String,
