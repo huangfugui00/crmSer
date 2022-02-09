@@ -49,6 +49,12 @@ const CustomerSchema = new Schema(
             type:String,
             enum:['线上' , '邮件' ,'介绍','促销','预约', '广告']
         },
+        address:{
+            type:String,
+        },
+        remark:{
+            type:String,
+        }
 
         
     }
