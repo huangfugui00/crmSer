@@ -11,10 +11,9 @@ const AdminBro  = require('admin-bro');
 const AdminOption = require('./config/admin')
 const adminRouter = require('./route/admin')
 const graphqlHTTP = require('express-graphql');
-// const schema = require('./graphql/schemas')
 const graphQlSchema = require('./graphql/schemas');
 const graphQlResolvers = require('./graphql/resolver/index');
-
+const auth = require('./middleware/auth')
 
 DBConnection()
 
@@ -28,7 +27,7 @@ const admin  = new AdminBro(AdminOption)
 app.use(admin.options.rootPath, adminRouter(admin))
 app.use(express.static('./'))
 app.use(cors())
-
+app.use(auth.protect)
 app.use('/graphql', cors(), graphqlHTTP({
   schema: graphQlSchema,
   rootValue: graphQlResolvers,

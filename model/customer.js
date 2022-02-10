@@ -16,7 +16,7 @@ const CustomerSchema = new Schema(
         },
         principal:{
             type:mongoose.Schema.ObjectId,
-            ref:'Profile',
+            ref:'User',
         },
         mobilePhone:{
             type:String,

@@ -1,14 +1,12 @@
 const mongoose = require('mongoose')
+const jwt = require("jsonwebtoken");
+const config = require("../config/config");
 
 const Schema = mongoose.Schema
 
 
 const ProfileSchema = new Schema(
     {
-        username: {
-            type: String,
-            required: [true, 'Please add an email'],
-          },
         phone:{
             type:String,
         },
@@ -19,12 +17,11 @@ const ProfileSchema = new Schema(
         },
         leader:{//上级领导
             type:mongoose.Schema.ObjectId,
-            ref:'Profile',
+            ref:'User',
             required:true,
         }
     },
 )
-
 
 
 

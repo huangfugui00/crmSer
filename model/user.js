@@ -9,6 +9,10 @@ const Schema = mongoose.Schema
 
 const UserSchema = new Schema(
     {
+        username: {
+            type: String,
+            required: [true, 'Please add an name'],
+        },
         email: {
             type: String,
             required: [true, 'Please add an email'],
