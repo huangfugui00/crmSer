@@ -8,6 +8,7 @@ type User {
     _id: ID!
     username: String
     email:String
+    roles:[String]
 }
 type Profile {
   _id: ID!
@@ -60,8 +61,9 @@ input CreateCustomerInput{
     url:String
 }
 
-type Token{
+type Auth{
     token:String
+    user:User
 }
 type RootQuery {
     getCustomers:[Customer]
@@ -70,7 +72,7 @@ type RootMutation {
     createCustomer(createInput:CreateCustomerInput):Customer
     updateCustomer(updateInput:CustomerInput):Customer
     deleteCustomer(_id:ID!):Customer
-    login(email: String!, password: String!): Token
+    login(email: String!, password: String!): Auth
 
 }
 schema {

@@ -10,12 +10,13 @@ module.exports={
               throw new Error('Email or Password is not correct')
             }
             const isMatch = await  user.matchPassword(args.password)
+
             if (!isMatch) {
                 throw new Error('Email or Password is not correct')
             }
 
             const token = user.getSignedJwtToken()
-            return {token};
+            return {token,user};
         }
         catch(err){
             throw new Error(err)
