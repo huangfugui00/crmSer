@@ -1,9 +1,11 @@
-const customerResolvers = require('./customer');
 const authResolvers = require('./auth');
+const customerResolvers = require('./customer');
+const contactResolvers = require('./contact');
 
 const rootResolver = {
     ...customerResolvers,
-    ...authResolvers
+    ...contactResolvers,
+    ...authResolvers,
   };
   
 

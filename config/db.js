@@ -1,9 +1,9 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
-const config = require('./config')
 
-// const MONGO_URI=config.SQL.url
-const MONGO_URI=process.env.db_url
+//db_url = mongodb+srv://admin:<password>@cluster0.tj20q.mongodb.net/test?retryWrites=true&w=majority
+
+const MONGO_URI=process.env.DB_URL
 
 const DBconnection = async () => {
   const conn = await mongoose

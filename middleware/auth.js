@@ -1,8 +1,6 @@
 const jwt = require('jsonwebtoken')
 const User = require('../model/user')
-const Utils = require('../utils/util')
-const config = require('../config/config')
-
+require('dotenv').config()
 
 
 const Auth={
@@ -22,7 +20,7 @@ const Auth={
         }   
         try {
             // Verify token
-            const decoded = jwt.verify(token, config.JWT.secret)
+            const decoded = jwt.verify(token, process.env.JWT_SECRET)
             req.userId = decoded.id
             req.auth = true
             return next()

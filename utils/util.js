@@ -14,8 +14,10 @@ const Utils={
         }
         const user = await UserModel.findById(userId)
         return user.roles.includes('admin')
+    },
 
-    }
 }
+
+
 
 module.exports=Utils
