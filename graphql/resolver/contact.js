@@ -58,7 +58,7 @@ module.exports={
             throw new Error('not auth')
         }
         try{
-            console.log('updateCustomer')
+            console.log('updateContact')
             await  authorize(req.userId,args.updateInput._id)
             options={
                 new:true,
