@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/crmSer.iml" filepath="$PROJECT_DIR$/.idea/crmSer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../cryptoapp - 副本/.idea/cryptoapp - 副本.iml" filepath="$PROJECT_DIR$/../cryptoapp - 副本/.idea/cryptoapp - 副本.iml" />
     </modules>
   </component>
 </project>
