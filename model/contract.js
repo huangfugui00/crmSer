@@ -62,11 +62,20 @@ const ContractSchema = new Schema(
 )
 
 ContractSchema.pre('findOneAndUpdate', async function(next) {
-    const price = this.getUpdate().$set.products.reduce((total,product)=>total+Math.round(product.price),0)
-    this.getUpdate().$set.price=price*this.getUpdate().$set.disCount/100
+    if(this.getUpdate()._id && this.getUpdate().products){
+        // graphql server
+        const price = this.getUpdate().products.reduce((total,product)=>total+Math.round(product.price),0)
+        this.getUpdate().price=price*this.getUpdate().disCount/100
+    }
+    else{
+        // adminBro
+        const price = this.getUpdate().$set.products.reduce((total,product)=>total+Math.round(product.price),0)
+        this.getUpdate().$set.price=price*this.getUpdate().$set.disCount/100
+    }
     next()
 });
 
+// admin,graphql服务端都可以
 ContractSchema.pre('save', async function(next) {
     const price = this.products.reduce((total,product)=>total+Math.round(product.price),0)
     this.price=price*this.disCount/100

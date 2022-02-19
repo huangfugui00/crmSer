@@ -119,6 +119,8 @@ input ProductInput{
     remark:String
 }
 
+
+
 type Contract{
      _id: ID!
     name:String
@@ -145,15 +147,16 @@ input CreateContractInput{
 }
 
 input UpdateContractInput{
+    _id: ID!
     name:String
     copName:ID
-    jobTitle:String
-    gender:String
-    phone:String
-    mobilePhone:String
-    email:String
-    address:String
     remark:String
+    signatory:ID
+    cuSignatory:ID
+    price:Float
+    contractType:String
+    disCount:Float
+    products:[ProductInput]
 }
 
 type Auth{
@@ -173,6 +176,8 @@ type RootMutation {
     updateContact(updateInput:UpdateContactInput):Contact
     deleteContact(_id:ID!):Contact
     createContract(createInput:CreateContractInput):Contract
+    updateContract(updateInput:UpdateContractInput):Contract
+    deleteContract(_id:ID!):Contract
     login(email: String!, password: String!): Auth
 
 }
