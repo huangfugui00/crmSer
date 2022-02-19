@@ -12,6 +12,12 @@ const options = {
         },
         price:{
             isVisible: { edit: false ,show:true,list:true },
+        },
+        paid:{
+            isVisible: { edit: false ,show:true,list:true },
+        },
+        unPaid:{
+            isVisible: { edit: false ,show:true,list:true },
         }
     }
 };

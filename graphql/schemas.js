@@ -153,7 +153,6 @@ input UpdateContractInput{
     remark:String
     signatory:ID
     cuSignatory:ID
-    price:Float
     contractType:String
     disCount:Float
     products:[ProductInput]

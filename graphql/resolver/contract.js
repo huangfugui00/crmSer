@@ -65,8 +65,7 @@ module.exports= {
             options={
                 new:true,
             }
-            const model = await Model.findOneAndUpdate({_id:args.updateInput._id},args.updateInput,options)
-            // const model = await Model.findByIdAndUpdate(args.updateInput._id,args.updateInput,options)
+            const model = await Model.findByIdAndUpdate(args.updateInput._id,args.updateInput,options)
             if (!model) {
                 throw new Error('Error')
             }

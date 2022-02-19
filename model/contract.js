@@ -47,7 +47,6 @@ const ContractSchema = new Schema(
         products:{
             type:[productSchema],
             required:true,
-
         },
         remark:{
             type:String,
@@ -55,6 +54,13 @@ const ContractSchema = new Schema(
         disCount:{
             type:Number,
             default:100,
+        },
+        unPaid:{
+            type:Number,
+        },
+        paid:{
+            type:Number,
+            default:0
         }
 
     },
@@ -78,6 +84,7 @@ ContractSchema.pre('findOneAndUpdate', async function(next) {
 // admin,graphql服务端都可以
 ContractSchema.pre('save', async function(next) {
     const price = this.products.reduce((total,product)=>total+Math.round(product.price),0)
+    this.unPaid = price
     this.price=price*this.disCount/100
     next()
 });
