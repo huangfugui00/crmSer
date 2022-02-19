@@ -63,19 +63,14 @@ const ContractSchema = new Schema(
 
 ContractSchema.pre('findOneAndUpdate', async function(next) {
     const price = this.getUpdate().$set.products.reduce((total,product)=>total+Math.round(product.price),0)
-    this.getUpdate().$set.price=price
-    console.log(price)
+    this.getUpdate().$set.price=price*this.getUpdate().$set.disCount/100
     next()
 });
+
 ContractSchema.pre('save', async function(next) {
     const price = this.products.reduce((total,product)=>total+Math.round(product.price),0)
-    this.price=price
-    console.log(price)
+    this.price=price*this.disCount/100
     next()
 });
-
-
-
-
 
 module.exports = mongoose.model('Contract', ContractSchema)

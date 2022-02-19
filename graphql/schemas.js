@@ -64,6 +64,7 @@ input CustomerInput{
     url:String
 }
 
+
 input CreateCustomerInput{
     name:String
     phone:String
@@ -75,7 +76,7 @@ input CreateCustomerInput{
     address:String
     remark:String
     url:String
-}
+} 
 
 
 input CreateContactInput{
@@ -105,6 +106,56 @@ input UpdateContactInput{
     remark:String
 }
 
+type Product{
+    _id:ID!
+    product:String
+    price:Float
+    remark:String
+}
+
+input ProductInput{
+    product:String
+    price:Float
+    remark:String
+}
+
+type Contract{
+     _id: ID!
+    name:String
+    copName:Customer
+    remark:String
+    signatory:User
+    cuSignatory:Contact
+    price:Float
+    contractType:String
+    disCount:Float
+    products:[Product]
+}
+
+input CreateContractInput{
+    name:String
+    copName:ID
+    remark:String
+    signatory:ID
+    cuSignatory:ID
+    price:Float
+    contractType:String
+    disCount:Float
+    products:[ProductInput]
+}
+
+input UpdateContractInput{
+    name:String
+    copName:ID
+    jobTitle:String
+    gender:String
+    phone:String
+    mobilePhone:String
+    email:String
+    address:String
+    remark:String
+}
+
 type Auth{
     token:String
     user:User
@@ -112,6 +163,7 @@ type Auth{
 type RootQuery {
     getCustomers:[Customer]
     getContacts:[Contact]
+    getContracts:[Contract]
 }
 type RootMutation {
     createCustomer(createInput:CreateCustomerInput):Customer
@@ -120,6 +172,7 @@ type RootMutation {
     createContact(createInput:CreateContactInput):Contact
     updateContact(updateInput:UpdateContactInput):Contact
     deleteContact(_id:ID!):Contact
+    createContract(createInput:CreateContractInput):Contract
     login(email: String!, password: String!): Auth
 
 }
