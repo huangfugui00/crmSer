@@ -66,6 +66,9 @@ module.exports= {
                 new:true,
             }
             const model = await Model.findByIdAndUpdate(args.updateInput._id,args.updateInput,options)
+                .populate('signatory')
+                .populate('copName')
+                .populate('cuSignatory')
             if (!model) {
                 throw new Error('Error')
             }
@@ -81,8 +84,9 @@ module.exports= {
         }
         try{
             console.log('createContract')
-            const body = {principal:req.userId,...args.createInput}
+            const body = {signatory:req.userId,...args.createInput}
             const model = await Model.create(body)
+            await Promise.all([model.populate('signatory'), model.populate('copName'),model.populate('cuSignatory')]);
             return model
         }
         catch(err){

@@ -68,15 +68,20 @@ const ContractSchema = new Schema(
 )
 
 ContractSchema.pre('findOneAndUpdate', async function(next) {
-    if(this.getUpdate()._id && this.getUpdate().products){
+    if(this.getUpdate()._id){
         // graphql server
-        const price = this.getUpdate().products.reduce((total,product)=>total+Math.round(product.price),0)
-        this.getUpdate().price=price*this.getUpdate().disCount/100
+        if( this.getUpdate().products){
+            const docToUpdate = await this.model.findOne(this.getQuery());
+            const price = this.getUpdate().products.reduce((total,product)=>total+Math.round(product.price),0)
+            this.getUpdate().price=price*this.getUpdate().disCount/100
+            this.getUpdate().unPaid = this.getUpdate().price -docToUpdate.paid
+        }
     }
     else{
         // adminBro
         const price = this.getUpdate().$set.products.reduce((total,product)=>total+Math.round(product.price),0)
         this.getUpdate().$set.price=price*this.getUpdate().$set.disCount/100
+        this.getUpdate().$set.unPaid = this.getUpdate().$set.price - this.getUpdate().$set.paid
     }
     next()
 });
@@ -84,8 +89,9 @@ ContractSchema.pre('findOneAndUpdate', async function(next) {
 // admin,graphql服务端都可以
 ContractSchema.pre('save', async function(next) {
     const price = this.products.reduce((total,product)=>total+Math.round(product.price),0)
-    this.unPaid = price
     this.price=price*this.disCount/100
+    this.unPaid = this.price
+    this.paid = this.price-this.unPaid
     next()
 });
 

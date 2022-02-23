@@ -6,7 +6,7 @@ scalar Date
 
 type User {
     _id: ID!
-    username: String
+    name: String
     email:String
     roles:[String]
 }
@@ -131,6 +131,8 @@ type Contract{
     price:Float
     contractType:String
     disCount:Float
+    paid:Float
+    unPaid:Float
     products:[Product]
 }
 
@@ -138,9 +140,7 @@ input CreateContractInput{
     name:String
     copName:ID
     remark:String
-    signatory:ID
     cuSignatory:ID
-    price:Float
     contractType:String
     disCount:Float
     products:[ProductInput]
@@ -151,7 +151,6 @@ input UpdateContractInput{
     name:String
     copName:ID
     remark:String
-    signatory:ID
     cuSignatory:ID
     contractType:String
     disCount:Float
@@ -178,7 +177,6 @@ type RootMutation {
     updateContract(updateInput:UpdateContractInput):Contract
     deleteContract(_id:ID!):Contract
     login(email: String!, password: String!): Auth
-
 }
 schema {
     query: RootQuery
