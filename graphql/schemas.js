@@ -157,6 +157,37 @@ input UpdateContractInput{
     products:[ProductInput]
 }
 
+type Refund{
+    _id: ID!
+    copName:Customer
+    contract:Contract
+    principal:User
+    refundPrice:Float
+    refundDate:Date
+    refundType:String
+    remark:String
+    contractPrice:Float
+}
+
+input CreateRefundInput{
+    copName:ID!
+    contract:ID!
+    principal:ID
+    refundPrice:Float
+    refundDate:Date
+    refundType:String
+    remark:String
+}
+
+input UpdateRefundInput{
+    _id:ID!
+    principal:ID
+    refundPrice:Float
+    refundDate:Date
+    refundType:String
+    remark:String
+}
+
 type Auth{
     token:String
     user:User
@@ -165,6 +196,7 @@ type RootQuery {
     getCustomers:[Customer]
     getContacts:[Contact]
     getContracts:[Contract]
+    getRefunds:[Refund]
 }
 type RootMutation {
     createCustomer(createInput:CreateCustomerInput):Customer
@@ -176,6 +208,9 @@ type RootMutation {
     createContract(createInput:CreateContractInput):Contract
     updateContract(updateInput:UpdateContractInput):Contract
     deleteContract(_id:ID!):Contract
+    createRefund(createInput:CreateRefundInput):Refund
+    updateRefund(updateInput:UpdateRefundInput):Refund
+    deleteRefund(_id:ID!):Refund
     login(email: String!, password: String!): Auth
 }
 schema {
