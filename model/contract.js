@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+const Refund = require('./refund')
 const Schema = mongoose.Schema
 
 const productSchema = new Schema(
@@ -66,6 +66,15 @@ const ContractSchema = new Schema(
     },
     { toJSON: { virtuals: true }, toObject: { virtuals: true }, timestamps: true }
 )
+//
+// ContractSchema.virtual('refunds', {
+//     ref: 'Refund',
+//     localField: '_id',
+//     foreignField: 'contract',
+//     justOne: false,
+//     options: { sort: { createdAt: -1 } },
+//     select:true
+// })
 
 ContractSchema.pre('findOneAndUpdate', async function(next) {
     if(this.getUpdate()._id){
@@ -94,5 +103,11 @@ ContractSchema.pre('save', async function(next) {
     this.paid = this.price-this.unPaid
     next()
 });
+
+
+ContractSchema.post('findOneAndRemove', async function(contract) {
+    await Refund.deleteMany({ contract: contract._id })
+});
+
 
 module.exports = mongoose.model('Contract', ContractSchema)

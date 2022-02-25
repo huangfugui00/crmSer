@@ -83,7 +83,7 @@ module.exports= {
         }
         try{
             console.log('createRefund')
-            const body = {signatory:req.userId,...args.createInput}
+            const body = {principal:req.userId,...args.createInput}
             const model = await Model.create(body)
             await Promise.all([model.populate('principal'), model.populate('copName'),model.populate('contract')]);
             return model

@@ -55,12 +55,12 @@ RefundSchema.pre('findOneAndUpdate', async function(next) {
         // graphql server
         if( this.getUpdate().refundPrice){
             const docToUpdate = await this.model.findOne(this.getQuery());
-            const contract = await updateContract(docToUpdate.contract._id,this.getUpdate().refundPrice)
+            const contract = await updateContract(docToUpdate.contract._id,this.getUpdate().refundPrice-docToUpdate.refundPrice)
         }
     }
     else{
         // adminBro
-        const contract = await updateContract(this.getUpdate().$set.contract._id,this.getUpdate().$set.refundPrice)
+        const contract = await updateContract(this.getUpdate().$set.contract,this.getUpdate().$set.refundPrice)
     }
     next()
 });
@@ -73,7 +73,10 @@ RefundSchema.pre('save', async function(next) {
     next()
 });
 
-
+RefundSchema.post('findOneAndRemove', async function(refund,next) {
+    const contract = await updateContract(refund.contract.toString(),-refund.refundPrice)
+    next()
+});
 
 
 module.exports = mongoose.model('Refund', RefundSchema)
