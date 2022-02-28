@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const Contract =  require('./contract');
+const Contract = require('./contract')
 const Schema = mongoose.Schema
 
 
@@ -33,11 +33,15 @@ const RefundSchema = new Schema(
         contractPrice:{
             type:Number,
         },
-    }
+    },
+    { toJSON: { virtuals: true }, toObject: { virtuals: true }, timestamps: true }
 )
 
 async function  updateContract(contractId,refundPrice){
     let contract = await Contract.findById(contractId)
+    if(!contract){
+        return
+    }
     this.contractPrice=contract.price
     //更新相应合同的已支付与未支付
     const updateInput={
@@ -67,14 +71,13 @@ RefundSchema.pre('findOneAndUpdate', async function(next) {
 
 
 RefundSchema.pre('save', async function(next) {
-    //补充contractPrice
-    const contract = await updateContract(this.contract._id,this.refundPrice)
+    const contract = await updateContract(this.contract.toString(),this.refundPrice)
     this.contractPrice=contract.price
     next()
 });
 
 RefundSchema.post('findOneAndRemove', async function(refund,next) {
-    const contract = await updateContract(refund.contract.toString(),-refund.refundPrice)
+    await updateContract(refund.contract.toString(),-refund.refundPrice)
     next()
 });
 

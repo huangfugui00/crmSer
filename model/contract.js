@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const Refund = require('./refund')
+// const Refund = require('./refund')
 const Schema = mongoose.Schema
 
 const productSchema = new Schema(
@@ -105,9 +105,10 @@ ContractSchema.pre('save', async function(next) {
 });
 
 
-ContractSchema.post('findOneAndRemove', async function(contract) {
-    await Refund.deleteMany({ contract: contract._id })
-});
+// ContractSchema.post('findOneAndRemove', async function(contract,next) {
+//     // await Refund.deleteMany({ contract: contract._id })
+//     this.model('Refund').remove({ contract: contract._id }, next);
+// });
 
 
 module.exports = mongoose.model('Contract', ContractSchema)

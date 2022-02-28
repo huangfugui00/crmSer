@@ -1,4 +1,5 @@
 const Model = require('@/model/contract');
+const RefundModel = require('@/model/refund')
 const Utils = require('@/utils/util')
 
 
@@ -48,6 +49,7 @@ module.exports= {
             if (!model) {
                 throw new Error('server delete Error')
             }
+            await RefundModel.deleteMany({ contract: args._id })
             return model;
         }
         catch(err){
